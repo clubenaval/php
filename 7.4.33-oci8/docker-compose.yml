@@ -1,0 +1,12 @@
+version: "3.7"
+services:
+  teste:
+    container_name: teste
+    hostname: teste
+    image: clubenaval/php:7.4.33-oci8
+    restart: always
+    volumes:
+      - /root/teste:/var/www/html
+    ports:
+      - 8080:80
+
