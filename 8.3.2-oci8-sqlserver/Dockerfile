@@ -29,6 +29,7 @@ RUN apt-get update && \
     libkrb5-dev \
     unixodbc \
     unixodbc-dev \
+    gnupg \
     libaio-dev \
     default-mysql-client \
     --no-install-recommends && \
@@ -56,6 +57,12 @@ RUN docker-php-ext-configure pdo_oci --with-pdo-oci=instantclient,/usr/local/ins
 
 # Instalação de extensões MySQL
 RUN docker-php-ext-install mysqli pdo_mysql
+
+# Instalação do Microsoft ODBC Driver for SQL Server
+RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - && \
+    curl https://packages.microsoft.com/config/debian/10/prod.list > /etc/apt/sources.list.d/mssql-release.list && \
+    apt-get update && \
+    ACCEPT_EULA=Y apt-get install -y msodbcsql17 unixodbc-dev
 
 # Restante da configuração e instalação de extensões
 RUN docker-php-ext-install \
