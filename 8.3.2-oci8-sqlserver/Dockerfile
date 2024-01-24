@@ -1,10 +1,11 @@
 # Use a imagem oficial do PHP com o Apache
-FROM php:8-apache
+FROM php:8.3.2-apache
 
 # Instalação de dependências necessárias
 RUN apt-get update && \
     apt-get install -y \
-    unzip \
+    unzip \ 
+    wget \
     freetds-bin \
     freetds-dev \
     libct4 \
@@ -33,13 +34,11 @@ RUN apt-get update && \
     --no-install-recommends && \
     a2enmod rewrite
 
-# Copia os arquivos do Oracle Instant Client para o contêiner
-COPY instantclient-basic-linux.x64-21.6.0.0.0dbru.zip /tmp/
-COPY instantclient-sdk-linux.x64-21.6.0.0.0dbru.zip /tmp/
-COPY instantclient-sqlplus-linux.x64-21.6.0.0.0dbru.zip /tmp/
-
-# Descompacta e move os arquivos
-RUN unzip /tmp/instantclient-basic-linux.x64-21.6.0.0.0dbru.zip -d /usr/local/ && \
+# Baixa, descompacta e move os arquivos do Oracle Instant Client para o contêiner
+RUN wget https://download.oracle.com/otn_software/linux/instantclient/216000/instantclient-basic-linux.x64-21.6.0.0.0dbru.zip -P /tmp/ && \
+    wget https://download.oracle.com/otn_software/linux/instantclient/216000/instantclient-sdk-linux.x64-21.6.0.0.0dbru.zip -P /tmp/ && \
+    wget https://download.oracle.com/otn_software/linux/instantclient/216000/instantclient-sqlplus-linux.x64-21.6.0.0.0dbru.zip -P /tmp/ && \
+    unzip /tmp/instantclient-basic-linux.x64-21.6.0.0.0dbru.zip -d /usr/local/ && \
     unzip /tmp/instantclient-sdk-linux.x64-21.6.0.0.0dbru.zip -d /usr/local/ && \
     unzip /tmp/instantclient-sqlplus-linux.x64-21.6.0.0.0dbru.zip -d /usr/local/ && \
     ln -s /usr/local/instantclient_21_6 /usr/local/instantclient && \
