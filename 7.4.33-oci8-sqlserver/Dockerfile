@@ -31,6 +31,7 @@ RUN apt-get update && \
     unixodbc-dev \
     libaio-dev \
     default-mysql-client \
+    gnupg \
     --no-install-recommends && \
     a2enmod rewrite
 
@@ -56,6 +57,11 @@ RUN docker-php-ext-configure pdo_oci --with-pdo-oci=instantclient,/usr/local/ins
 
 # Instalação de extensões MySQL
 RUN docker-php-ext-install mysqli pdo_mysql
+
+# Instalação do Microsoft ODBC Driver for SQL Server
+RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - && \
+    sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/debian/11/prod bullseye main" > /etc/apt/sources.list.d/mssql-release.list' && \
+    apt update && ACCEPT_EULA=Y apt install -y msodbcsql18 mssql-tools18 unixodbc-dev msodbcsql17
 
 # Restante da configuração e instalação de extensões
 RUN docker-php-ext-install \
@@ -101,6 +107,8 @@ RUN docker-php-ext-install \
     echo "extension=pdo_sqlsrv.so" >> /usr/local/etc/php/conf.d/docker-php-ext-pdo_sqlsrv.ini && \
     echo "date.timezone = 'America/Sao_Paulo'" >> /usr/local/etc/php/php.ini && \
     echo "max_execution_time = 300" >> /usr/local/etc/php/php.ini && \
+    echo "upload_max_filesize = 2048M" >> /usr/local/etc/php/php.ini && \
+    echo "post_max_size = 200M" >> /usr/local/etc/php/php.ini && \
     ln -sf /dev/stdout /var/log/apache2/access.log && \
     ln -sf /dev/stderr /var/log/apache2/error.log && \
     rm -r /etc/localtime && \
