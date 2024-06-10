@@ -108,6 +108,8 @@ RUN docker-php-ext-install \
     echo "extension=pdo_sqlsrv.so" >> /usr/local/etc/php/conf.d/docker-php-ext-pdo_sqlsrv.ini && \
     echo "date.timezone = 'America/Sao_Paulo'" >> /usr/local/etc/php/php.ini && \
     echo "max_execution_time = 300" >> /usr/local/etc/php/php.ini && \
+    echo "upload_max_filesize = 2048M" >> /usr/local/etc/php/php.ini && \
+    echo "post_max_size = 200M" >> /usr/local/etc/php/php.ini && \
     ln -sf /dev/stdout /var/log/apache2/access.log && \
     ln -sf /dev/stderr /var/log/apache2/error.log && \
     rm -r /etc/localtime && \
