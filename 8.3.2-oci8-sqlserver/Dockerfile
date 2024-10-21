@@ -110,6 +110,7 @@ RUN docker-php-ext-install \
     echo "max_execution_time = 300" >> /usr/local/etc/php/php.ini && \
     echo "upload_max_filesize = 2048M" >> /usr/local/etc/php/php.ini && \
     echo "post_max_size = 200M" >> /usr/local/etc/php/php.ini && \
+    a2enmod remoteip && \
     ln -sf /dev/stdout /var/log/apache2/access.log && \
     ln -sf /dev/stderr /var/log/apache2/error.log && \
     rm -r /etc/localtime && \
