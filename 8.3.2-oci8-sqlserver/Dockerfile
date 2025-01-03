@@ -76,6 +76,7 @@ RUN docker-php-ext-install \
     opcache \
     xml \
     zip \
+    gd \
     intl \
     xsl \
     ftp \
