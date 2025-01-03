@@ -25,6 +25,7 @@ RUN apt-get update && \
     libonig-dev \
     libexif-dev \
     libldap2-dev \
+    libpng-dev \
     libc-client-dev \
     libkrb5-dev \
     unixodbc \
@@ -76,9 +77,9 @@ RUN docker-php-ext-install \
     opcache \
     xml \
     zip \
-    gd \
     intl \
     xsl \
+    gd \
     ftp \
     snmp \
     gmp \
