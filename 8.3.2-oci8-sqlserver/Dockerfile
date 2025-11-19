@@ -47,9 +47,9 @@ RUN wget https://download.oracle.com/otn_software/linux/instantclient/216000/ins
     ln -s /usr/local/instantclient/sqlplus /usr/bin/sqlplus
 
 # Define variáveis de ambiente para o Oracle Instant Client
-ENV LD_LIBRARY_PATH /usr/local/instantclient
-ENV ORACLE_HOME /usr/local/instantclient
-ENV TNS_ADMIN /usr/local/instantclient
+ENV LD_LIBRARY_PATH=/usr/local/instantclient
+ENV ORACLE_HOME=/usr/local/instantclient
+ENV TNS_ADMIN=/usr/local/instantclient
 
 # Configuração do driver oci8
 RUN docker-php-ext-configure pdo_oci --with-pdo-oci=instantclient,/usr/local/instantclient,21.6 && \
